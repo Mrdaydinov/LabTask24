@@ -1,23 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LabTask24
+﻿namespace LabTask24
 {
     internal class Market
     {
         public Product[] Products { get; set; }
 
+
+        public Market(params Product[] products)
+        {
+            Products = products;
+        }
+
+
         public void Kassa(Customer customer, Product product)
         {
             //написано для одного продукта исправить на несколько, исправить чтобы можно было вводить нужный продукт через консоль,
-            //не добавлена проверка баланса при покупке, добавить интерактивный вывод информации
+            //добавить интерактивный вывод информации
             while (true)
             {
+                
                 Products = customer.InBasket(product);
                 if (Products.Length > product.AvailableCount)
                 {
@@ -53,10 +53,22 @@ namespace LabTask24
                 switch (paymentMethod.ToLower())
                 {
                     case "cash":
-                        customer.CashBalance -= basketPrice;
+                        if (basketPrice > customer.CashBalance)
+                        {
+                            Console.WriteLine("Not enough money");
+                            goto label2;
+                        }
+                        else
+                            customer.CashBalance -= basketPrice;
                         break;
                     case "credit card":
-                        customer.CardBalance -= basketPrice;
+                        if (basketPrice > customer.CardBalance)
+                        {
+                            Console.WriteLine("Not enough money");
+                            goto label2;
+                        }
+                        else
+                            customer.CardBalance -= basketPrice;
                         break;
                     default:
                         goto label2;
