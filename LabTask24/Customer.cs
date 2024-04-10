@@ -23,7 +23,7 @@
         //}
 
 
-        public Product[] InBasket(Product product)
+        public static Product[] InBasket(Product[] products, Product product)
         {
             Product[] Add(Product[] products, Product product)
             {
@@ -39,7 +39,7 @@
                 return newProducts;
             }
 
-            Product[] products = new Product[0];
+            
             return Add(products, product);
         }
     }
